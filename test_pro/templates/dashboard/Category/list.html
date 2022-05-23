@@ -1,0 +1,59 @@
+{% extends 'dashboard/index.html' %}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Table with Links</h4>
+            <p class="category">Here is a subtitle for this table</p>
+        </div>
+        <div class="card-content table-responsive table-full-width">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">№</th>
+                        <th>Name</th>
+                        <th class="">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in ctgs %}
+                    <tr>
+                        <td class="text-center">{{ forloop.counter }}</td>
+                        <td>{{ i.content }}</td>
+                        <td class="td-actions">
+                            <a href="{% url 'dashboard_ctg_detail' pk=i.id %}" rel="tooltip" title="View Profile" class="btn btn-info btn-simple btn-xs">
+                                <i class="ti-user"></i>
+                            </a>
+                            <a href="{% url 'dashboard_ctg_edit' pk=i.id %}" rel="tooltip" title="Edit Profile" class="btn btn-success btn-simple btn-xs">
+                                <i class="ti-pencil-alt"></i>
+                            </a>
+                            <a href="{% url 'dashboard_ctg_delete' delete=i.id %}" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                <i class="ti-close"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a href="{% url 'dashboard_ctg_add' %}"><button class="btn btn-danger btn-fill btn-wd">Add Category</button></a>
+<br>
+
+<ul class="pagination">
+    {% if prev %}
+        <li><a href="{% url 'dashboard_ctg_list_page' page=prev %}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
+    {% endif %}
+    {% for i in number %}
+        <li class="active"><a href="{% url 'dashboard_ctg_list_page' page=i %}">{{ i }}</a></li>
+    {% endfor %}
+    {% if next %}
+        <li><a href="{% url 'dashboard_ctg_list_page' page=next %}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+    {% endif %}
+</ul>
+
+{% endblock %}
+
